@@ -213,7 +213,14 @@ int str_sub_fast(string s, string sub, int start) // KMP实现
     {
         if (sub.data[i] == sub.data[j])
         {
-            next[i] = j + 1;
+            if (j == 0)
+            {
+                next[i] = 0;
+            }
+            else
+            {
+                next[i] = next[j - 1];
+            }
             i++;
             j++;
         }
@@ -287,7 +294,7 @@ int main()
         if (res == -1)
             break;
         printf("%d ", res);
-        res+=t.len;
+        res += t.len;
     }
 
     return 0;
