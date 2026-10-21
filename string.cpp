@@ -205,21 +205,19 @@ bool str_replace(string *s, string olds, string news)
 
 int str_sub_fast(string s, string sub, int start) // KMP实现
 {
-    int *next = (int *)calloc(sub.len, sizeof(int));
-    int i = 0, j = 0, k = 0;
+    int i, j, k;
+    int next[sub.len] = {0};
     next[0] = 0;
     i = 1;
-    while (i <= sub.len - 1)
+    j = 0;
+    while (i < sub.len)
     {
         if (sub.data[i] == sub.data[j])
         {
-            if (j == 0)
+            next[i] = j + 1;
+            if (sub.data[i] == sub.data[next[i]])
             {
-                next[i] = 0;
-            }
-            else
-            {
-                next[i] = next[j - 1];
+                next[i] = next[next[i]];
             }
             i++;
             j++;
@@ -232,15 +230,12 @@ int str_sub_fast(string s, string sub, int start) // KMP实现
                 i++;
                 continue;
             }
-            else
-            {
-                j = next[j - 1];
-            }
+            j = next[j - 1];
         }
     }
+    i = 0;
     j = 0;
-    i = start;
-    while (i <= s.len - 1)
+    while (i < s.len && sub.len)
     {
         if (s.data[i] == sub.data[j])
         {
@@ -249,14 +244,16 @@ int str_sub_fast(string s, string sub, int start) // KMP实现
         }
         else
         {
-            if (j == 0)
+            if (j > 0)
+            {
+                j = next[j - 1];
+            }
+            else
             {
                 i++;
-                continue;
             }
-            j = next[j - 1];
         }
-        if (j == sub.len)
+        if (j >= sub.len)
         {
             return i - j;
         }
@@ -281,21 +278,12 @@ int main()
     // str_free(&s);
     // str_free(&sub);
 
-    string t;
-    string s;
-    char test[10] = "aaaaaaaaa";
-    char a[10] = "aa";
-    str_init(&t, 2, a);
-    str_init(&s, 9, test);
-    int res = 0;
-    while (1)
-    {
-        res = str_sub_fast(s, t, res);
-        if (res == -1)
-            break;
-        printf("%d ", res);
-        res += t.len;
-    }
+    char a[20] = "ppabaababaabcac";
+    char b[9] = "abaabcac";
+    string s, sub;
+    str_init(&s, 15, a);
+    str_init(&sub, 8, b);
+    printf("%d ", str_sub_fast(s, sub, 0));
 
     return 0;
 }
