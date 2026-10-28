@@ -47,7 +47,7 @@ int s_sub(sst s, sst sub)
     j = 1;
     while (i <= s_len(s) && j <= s_len(sub))
     {
-        if (j == 0 || s.data[i] == sub.data[j])
+        if (j==0||s.data[i] == sub.data[j])
         {
             i++;
             j++;
@@ -57,14 +57,14 @@ int s_sub(sst s, sst sub)
             j = next[j];
         }
         if (j > s_len(sub))
-            return i - j;
+            return i - j+1;
     }
     return 0;
 }
 
 int main()
 {
-    char a[20] = "ppabaababaabcac";
+    char a[20] = "abaababaabcac";
     char b[9] = "abaabcac";
     sst s, sub;
     s_init(&s, 13, a);
