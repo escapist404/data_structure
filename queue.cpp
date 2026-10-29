@@ -14,8 +14,8 @@ struct queue
 
 bool q_init(queue *s, int n);
 bool q_is_full(queue s);
-bool q_push(queue s);
-bool q_pop(queue s);
+bool q_push(queue *s, int x);
+bool q_pop(queue *s);
 node q_front(queue s);
 bool q_is_empty(queue s);
 void q_clear(queue s);
