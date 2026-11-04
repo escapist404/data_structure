@@ -111,8 +111,8 @@ matrix add(matrix s1, matrix s2)
     matrix s;
     s.m = s1.m;
     s.n = s1.n;
-    s.x = (node **)calloc(s.m, sizeof(node));
-    s.y = (node **)calloc(s.n, sizeof(node));
+    s.x = (node **)calloc(s.m, sizeof(node*));
+    s.y = (node **)calloc(s.n, sizeof(node*));
     int i, j, k;
     for (i = 0; i <= s.m - 1; i++)
     {
@@ -122,14 +122,17 @@ matrix add(matrix s1, matrix s2)
         while (a != NULL || b != NULL)
         {
             node *p = (node *)calloc(1, sizeof(node));
-            p->i = a->i;
-            if (b == NULL || (a->j < b->j))
+            if (a != NULL)
+                p->i = a->i;
+            else
+                p->i = b->i;
+            if (b == NULL || ((a != NULL) && (a->j < b->j)))
             {
                 p->j = a->j;
                 p->x = a->x;
                 a = a->right;
             }
-            else if (a == NULL || (a->j > b->j))
+            else if (a == NULL || ((b != NULL) && (a->j > b->j)))
             {
                 p->j = b->j;
                 p->x = b->x;
@@ -139,6 +142,90 @@ matrix add(matrix s1, matrix s2)
             {
                 p->j = a->j;
                 p->x = a->x + b->x;
+                a = a->right;
+                b = b->right;
+            }
+            /*------------------------------------------------*/
+            if (s.x[i] == NULL)
+            {
+                s.x[i] = p;
+                head = s.x[i];
+            }
+            else
+            {
+                head->right = p;
+                head = head->right;
+            }
+            /*------------------------------------------------*/
+            j = p->j;
+            node *down = s.y[j];
+            if (s.y[j] == NULL)
+            {
+                s.y[j] = p;
+                down = s.y[j];
+            }
+            else
+            {
+                while (down->down != NULL)
+                {
+                    down = down->down;
+                }
+                down->down = p;
+                down = down->down;
+            }
+        }
+    }
+    return s;
+}
+
+matrix minus(matrix s1, matrix s2)
+{
+    if (s1.m != s2.m || s1.n != s2.n)
+    {
+        printf("大小不一致");
+        matrix tem;
+        return tem;
+    }
+    matrix s;
+    s.m = s1.m;
+    s.n = s1.n;
+    s.x = (node **)calloc(s.m, sizeof(node*));
+    s.y = (node **)calloc(s.n, sizeof(node*));
+    int i, j, k;
+    for (i = 0; i <= s.m - 1; i++)
+    {
+        node *a = s1.x[i];
+        node *b = s2.x[i];
+        node *head;
+        while (a != NULL || b != NULL)
+        {
+            node *p = (node *)calloc(1, sizeof(node));
+            if (a != NULL)
+                p->i = a->i;
+            else
+                p->i = b->i;
+            if (b == NULL || (a != NULL && a->j < b->j))
+            {
+                p->j = a->j;
+                p->x = a->x;
+                a = a->right;
+            }
+            else if (a == NULL || (b != NULL && a->j > b->j))
+            {
+                p->j = b->j;
+                p->x = -b->x;
+                b = b->right;
+            }
+            else if (a->j == b->j)
+            {
+                p->j = a->j;
+                p->x = a->x - b->x;
+                if(p->x == 0)
+                {
+                    a = a->right;
+                    b = b->right;
+                    continue;
+                }
                 a = a->right;
                 b = b->right;
             }
@@ -261,6 +348,7 @@ int main()
     print(s2);
     print(add(s1, s2));
     print(by(s1, s2));
+    print(minus(s1, by(s1, s2)));
     return 0;
 }
 /*
