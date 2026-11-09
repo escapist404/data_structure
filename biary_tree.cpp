@@ -3,9 +3,14 @@
 #include <math.h>
 struct node
 {
-    bool mark = false;
-    char x = '\0';
+    bool mark = false; // 该下标是否有数据
+    char x = '\0';     // 结点数据
 };
+
+node *init(char in[], node *s, int depth); // 建树：深度depth的顺序二叉树，in按层序给出（'*'或'\0'为空结点），返回1base数组
+char get(char to[], node *s);              // 取值：to为路径串（'1'左'2'右），返回对应结点的值
+
+/*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
 node *init(char in[], node *s, int depth)
 {
     int len = pow(2, depth) - 1;

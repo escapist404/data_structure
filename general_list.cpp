@@ -2,11 +2,19 @@
 #include <stdlib.h>
 struct node
 {
-    int mark = 0;
-    double x = 0;
-    node *next = NULL;
-    node *in = NULL;
+    int mark = 0;      // 0原子 / 1子表
+    double x = 0;      // 原子的数值
+    node *next = NULL; // 同层下一个元素
+    node *in = NULL;   // 子表（mark==1时有效）
 };
+
+double read_num(char in[], int &n); // 辅助：从in的n处读一个数（数字和小数点）
+node *init(char in[], int &n);      // 建表：从括号串in的n处递归建广义表
+void depth(node *p, int t, int &d); // 求深度：t为当前层号，d记录最大深度
+void print(node *p);                // 打印：按括号形式输出
+node *copy(node *a);                // 复制：深拷贝广义表
+
+/*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
 double read_num(char in[], int &n)
 {
     char input[256] = "";

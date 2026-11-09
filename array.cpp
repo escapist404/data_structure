@@ -2,19 +2,23 @@
 #include <stdlib.h>
 struct array
 {
-    int dim = 0;
-    int *n = NULL;
-    int *data;
+    int dim = 0;   // 维数
+    int *n = NULL; // 各维长度
+    int *data;     // 数据，按行主序（最后一维变化最快）连续存放
 };
 
-bool a_init(array *s, int dim, int *n, int *data, bool to_init = true);
-int a_get(array s, int *n);
-void my_print(array s, int dim, int size);
-void my_add(array *s, array s1, array s2, int dim, int size);
-void my_minus(array *s, array s1, array s2, int dim, int size);
-array *a_add(array s1, array s2);
-array *a_minus(array s1, array s2);
-array *a_T(array s);
+bool a_init(array *s, int dim, int *n, int *data, bool to_init = true); // 初始化：dim维、各维长度为n，data按行主序装入（to_init=false时只分配空间不装数据）
+int a_get(array s, int *n);                                             // 取值：返回下标n处的元素，越界返回0
+bool a_set(array &s, int *n, int set);                                  // 设置：把下标n处的元素改为set，越界返回false
+void a_free(array *s);                                                  // 销毁：释放n和data的空间
+void a_print(array s);                                                  // 打印：按[ [..] [..] ]嵌套形式输出整个数组
+array *a_add(array s1, array s2);                                       // 加法：同型数组对应元素相加，返回新数组
+array *a_minus(array s1, array s2);                                     // 减法：同型数组对应元素相减，返回新数组
+array *a_by(array s1, array s2);                                        // 乘法：二维矩阵乘s1×s2（要求s1列数==s2行数）
+array *a_T(array s);                                                    // 转置：二维矩阵转置，返回新数组
+void my_print(array s, int dim, int size);                              // 辅助（递归）：从第dim维、线性偏移size处开始输出
+void my_add(array *s, array s1, array s2, int dim, int size);           // 辅助（递归）：对应元素相加
+void my_minus(array *s, array s1, array s2, int dim, int size);         // 辅助（递归）：对应元素相减
 /*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
 
 bool a_init(array *s, int dim, int *n, int *data, bool to_init)

@@ -2,24 +2,26 @@
 #include <stdlib.h>
 struct node
 {
-    int x;
+    int x; // 数据
 };
 struct queue
 {
-    int space = 0;
-    node *data = NULL;
-    int head = 0;
-    int tail = 0;
+    int space = 0;     // 容量
+    node *data = NULL; // 存储数组
+    int head = 0;      // 队首下标
+    int tail = 0;      // 队尾下标（下一个入队位置）
 };
 
-bool q_init(queue *s, int n);
-bool q_is_full(queue s);
-bool q_push(queue *s, int x);
-bool q_pop(queue *s);
-node q_front(queue s);
-bool q_is_empty(queue s);
-void q_clear(queue s);
-int q_size(queue s);
+bool q_init(queue *s, int n); // 初始化：容量为n的循环队列
+bool q_is_full(queue s);      // 判满：尾后留一个空位区分满和空
+bool q_push(queue *s, int x); // 入队：满则失败
+bool q_pop(queue *s);         // 出队：空则失败
+node q_front(queue s);        // 取队首
+bool q_is_empty(queue s);     // 判空：head==tail
+void q_clear(queue s);        // 清空：释放空间并归零
+int q_size(queue s);          // 求长度：环形需分是否绕回
+void q_print(queue s);        // 打印：从队首到队尾
+bool yhsj(queue *s, int n);   // 杨辉三角：用队列逐行生成并打印
 
 /*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
 bool q_init(queue *s, int n)

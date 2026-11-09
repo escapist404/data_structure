@@ -3,9 +3,9 @@
 #define NUM 30
 struct string
 {
-    char *data;
-    int space;
-    int len;
+    char *data; // 数据
+    int space;  // 容量
+    int len;    // 长度
 };
 bool str_init(string *s, int len, char in[]);          // 初始化：把长度为len的字符数组in装入串s，按NUM分配空间
 void str_print(string s);                              // 打印：输出串的长度和数据

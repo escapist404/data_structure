@@ -2,23 +2,31 @@
 #include <stdlib.h>
 #define NUM 5
 
-/*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
-
 struct node
 {
-    int i = 0;
-    int j = 0;
-    int x = 0;
+    int i = 0;         // 行
+    int j = 0;         // 列
+    int x = 0;         // 非零元的值
 };
 struct matrix
 {
-    int m = 0;
-    int n = 0;
-    int size = 0;
-    int place = 0;
-    int *head = NULL;
-    node *data = NULL;
+    int m = 0;         // 行数
+    int n = 0;         // 列数
+    int size = 0;      // 非零元个数
+    int place = 0;     // data容量
+    int *head = NULL;  // 行逻辑链接：第i行首元素在data中的下标
+    node *data = NULL; // 三元组数组，按行、列升序
 };
+
+void sort(matrix *s);               // 排序：三元组按行、列从小到大
+void set_head(matrix *s);           // 行表：head[i]记录第i行首元素在data中的下标
+bool init(matrix *s, int m, int n); // 建表：m行n列，输入"i j x"若干行，'#'结束
+void print(matrix s);               // 打印：按普通矩阵形式输出
+matrix T(matrix s);                 // 快速转置：按每列个数定位，O(n+size)
+matrix by(matrix s1, matrix s2);    // 乘法：s1×s2
+
+/*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
+
 int cmp(const void *a, const void *b)
 {
     node *x = (node *)a;

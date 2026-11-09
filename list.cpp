@@ -3,34 +3,32 @@
 #define NUM 10
 struct node
 {
-    int x = 0;
-    int y = 0; // x的y次方
+    int x = 0; // 系数
+    int y = 0; // x的y次方（指数）
 };
 
 struct list
 {
-    node *data;
-    int len = 0;
-    int space = 0;
+    node *data;    // 顺序存储的数据
+    int len = 0;   // 项数
+    int space = 0; // 容量
 };
 int cmp(const void *a, const void *b)
 {
     return ((node *)a)->y - ((node *)b)->y;
 }
 long double ld;
-list list_init(int in[][2], int len, int space = 100);
-node list_get_n(list s, int n); // 无数据，返回的x为0,n为0base
-node list_get_y(list s, int y); // 无数据，返回的x为0
-list list_merge(list s1, list s2, bool sorted = false);
-void list_sort(list *s);
-void list_push_front(list *s, int x, int y);
-void list_push_back(list *s, int x, int y);
-list list_merge_item(list s);
-bool list_set(list *s, int x, int y);
-void list_free(list *s);
-void list_print(list s);
-
-void list_merge_item(node *s);
+list list_init(int in[][2], int len, int space = 100); // 初始化：装入len对{系数,指数}，按space分配容量
+node list_get_n(list s, int n); // 按序号取值：返回第n项（0base），无数据时x为0
+node list_get_y(list s, int y); // 按指数取值：返回指数y的系数之和，无数据时x为0
+list list_merge(list s1, list s2, bool sorted = false); // 合并：两多项式相加（sorted=true表示已按y排好序）
+void list_sort(list *s);       // 排序：按指数y从小到大
+void list_push_front(list *s, int x, int y); // 头插一项（x为0不插）
+void list_push_back(list *s, int x, int y);  // 尾插一项（x为0不插）
+list list_merge_item(list s);  // 合并同类项：指数相同系数相加，剔除零项
+bool list_set(list *s, int x, int y); // 设置：把指数y的系数改为x
+void list_free(list *s);       // 销毁：释放data空间
+void list_print(list s);       // 打印：按"系数x^指数"形式输出
 /*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
 list list_init(int in[][2], int len, int space)
 {

@@ -8,33 +8,34 @@
 using namespace std;
 struct node
 {
-    node *left = NULL;
-    node *right = NULL;
-    node *father = NULL;
-    char x;
+    node *left = NULL;   // 左孩子
+    node *right = NULL;  // 右孩子
+    node *father = NULL; // 父结点
+    char x;              // 结点数据
 };
 
 struct forest
 {
-    vector<node *> data;
+    vector<node *> data; // 森林里的各棵树
 };
 
-node *bt_brother(node *p);
-void bt_clear(node *p);
-node *bt_init(char in[], int &n, node *father);
-vector<char> bt_ancestry(node *p);
-vector<char> bt_cousin(node *p);
-int bt_height(node *p);
-int bt_leafnum(node *p);
-vector<char> bt_pre_visit(node *p);
-vector<char> bt_in_visit(node *p);
-vector<char> bt_post_visit(node *p);
-vector<char> bt_bfs(node *p);
-vector<char> bt_dfs_pre(node *p);
-vector<char> bt_dfs_in(node *p);
-vector<char> bt_dfs_post(node *p);
-node *bt_joint(char c, node *l, node *r);
-forest bt_init_forest(char in[]);
+node *bt_brother(node *p);                      // 兄弟：返回p的兄弟，没有返回NULL
+void bt_clear(node *p);                         // 清空：递归释放整棵树
+node *bt_init(char in[], int &n, node *father); // 建树：从"A(B,C)"形式串的n处递归建树
+vector<char> bt_ancestry(node *p);              // 祖先：返回从根到父结点的序列
+vector<char> bt_cousin(node *p);                // 堂兄弟：父结点的兄弟的孩子
+int bt_height(node *p);                         // 高度：按结点数计，空树为0
+int bt_leafnum(node *p);                        // 叶子数
+vector<char> bt_pre_visit(node *p);             // 先序遍历（递归）
+vector<char> bt_in_visit(node *p);              // 中序遍历（递归）
+vector<char> bt_post_visit(node *p);            // 后序遍历（递归）
+vector<char> bt_bfs(node *p);                   // 层序遍历（队列）
+vector<char> bt_dfs_pre(node *p);               // 先序遍历（栈，非递归）
+vector<char> bt_dfs_in(node *p);                // 中序遍历（栈，非递归）
+vector<char> bt_dfs_post(node *p);              // 后序遍历（栈，非递归）
+node *bt_joint(char c, node *l, node *r);       // 合并：新建结点c作根连接l、r
+forest bt_init_forest(char in[]);               // 建森林：按顶层逗号切成多棵树
+void bt_clear_forest(forest s);                 // 清空：释放森林全部结点
 
 /*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
 

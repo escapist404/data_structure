@@ -3,21 +3,23 @@
 #define SPACE 10
 struct node
 {
-    float x = 0;
-    char c = '\0';
+    float x = 0;   // 操作数
+    char c = '\0'; // 运算符（'\0'表示这是操作数）
 };
 struct stack
 {
-    node *base = NULL;
-    node *top = NULL;
-    int space = 0;
+    node *base = NULL; // 栈底
+    node *top = NULL;  // 栈顶（指向下一个空位）
+    int space = 0;     // 当前容量
 };
-bool stack_init(stack *s);
-float stack_top(stack *s);
-bool stack_pop(stack *s);
-int stack_len(stack *s);
-bool stack_free(stack *s);
-void stack_push(stack *s, float a);
+bool stack_init(stack *s);          // 初始化：按SPACE分配空间
+float stack_top(stack *s);          // 取栈顶（不出栈）
+bool stack_pop(stack *s);           // 出栈：空则失败
+int stack_len(stack *s);            // 求长度
+bool stack_free(stack *s);          // 销毁：释放空间
+void stack_push(stack *s, float a); // 入栈：满则按SPACE扩容
+node *node_init(int len, int x[], char c[]); // 辅助：把操作数组和运算符装成后缀表达式序列
+float compute(stack *s, node *t, int len);   // 求值：用栈计算后缀表达式t
 
 /*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
 bool stack_init(stack *s)

@@ -2,9 +2,9 @@
 #include <stdlib.h>
 struct node
 {
-    int x = 0;
-    int y = 0; // x的y次方
-    node *next = NULL;
+    int x = 0;         // 系数（头结点存链表长度）
+    int y = 0;         // x的y次方（指数）
+    node *next = NULL; // 下一结点
 };
 int list_len(node *s);                                    // 输出链表长度
 void list_print(node *s);                                 // 逐个输出一个链表
@@ -20,8 +20,8 @@ node *list_insert_n(node *s, int x, int y, int n);        // 设置第n位(0base
 int list_get_y(node *s, int y);                           // 返回指定y的系数,失败返回0
 int list_get_n(node *s, int n);                           // 返回指定序号位n的系数x,失败返回0
 bool list_set(node *s, int x, int y);                     // 设置指定y的系数,失败返回false
-int list_del_y(node *s, int y);
-void list_merge_item(node *s);
+int list_del_y(node *s, int y);                           // 删除：删掉指数y的项并返回其系数，没有则返回0
+void list_merge_item(node *s);                            // 合并同类项：先排序，指数相同的系数相加
 /*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
 int cmp(const void *s1, const void *s2)
 {

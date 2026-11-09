@@ -2,20 +2,27 @@
 #include <stdlib.h>
 struct node
 {
-    int i = 0;
-    int j = 0;
-    int x = 0;
-    node *down = NULL;  // 也当头节点
-    node *right = NULL; // 也当尾节点
+    int i = 0;          // 行
+    int j = 0;          // 列
+    int x = 0;          // 非零元的值
+    node *down = NULL;  // 同列下一个（头结点也用它）
+    node *right = NULL; // 同行下一个（头结点也用它）
 };
 struct matrix
 {
-    int m;
-    int n;
-    node **x = NULL;
-    node **y = NULL;
+    int m;           // 行数
+    int n;           // 列数
+    node **x = NULL; // 行头指针数组
+    node **y = NULL; // 列头指针数组
 };
 
+bool init(matrix *s, int m, int n); // 建表：m行n列，输入"i j x"若干行，'#'结束
+void print(matrix s);               // 打印：按普通矩阵形式输出
+matrix add(matrix s1, matrix s2);   // 加法：返回新矩阵
+matrix minus(matrix s1, matrix s2); // 减法：返回新矩阵
+matrix by(matrix s1, matrix s2);    // 乘法：s1×s2，返回新矩阵
+
+/*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
 bool init(matrix *s, int m, int n)
 {
     s->m = m;

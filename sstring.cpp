@@ -2,8 +2,14 @@
 #include <stdlib.h>
 struct sst
 {
-    char data[256];
+    char data[256]; // data[0]存长度，字符从data[1]开始（1base）
 };
+
+int s_len(sst s);                       // 求长：返回data[0]
+bool s_init(sst *s, int len, char *in); // 初始化：长度len写入data[0]，字符装入data[1..len]
+int s_sub(sst s, sst sub);              // KMP查找：返回sub在s中首次出现的位序（1base），找不到返回0
+
+/*------------------------------------------------------------函数实现------------------------------------------------------------------------*/
 int s_len(sst s)
 {
     return (int)(s.data[0]);
