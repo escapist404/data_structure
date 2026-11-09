@@ -246,6 +246,7 @@ node *list_insert_n(node *s, int x, int y, int n)
     tem->y = y;
     tem->next = now->next;
     now->next = tem;
+    s->x++;
     return tem;
 }
 int list_get_y(node *s, int y)
@@ -316,9 +317,9 @@ void list_merge_item(node *s)
 {
     list_sort(s);
     node *now = s->next;
-    while (now->next != NULL)
+    while (now != NULL && now->next != NULL)
     {
-        while (now->next->y == now->y && now->next != NULL)
+        if (now->next->y == now->y)
         {
             node *tem = now->next;
             now->x += now->next->x;
@@ -326,7 +327,10 @@ void list_merge_item(node *s)
             free(tem);
             s->x--;
         }
-        now = now->next;
+        else
+        {
+            now = now->next;
+        }
     }
 }
 

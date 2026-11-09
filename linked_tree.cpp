@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <algorithm>
 #include <queue>
 #include <stack>
 #include <vector>
@@ -40,7 +41,7 @@ forest bt_init_forest(char in[]);
 void print(vector<char> s)
 {
     int i;
-    for (i = 0; i <= s.size() - 1; i++)
+    for (i = 0; i < (int)s.size(); i++)
     {
         printf("%c ", s[i]);
     }
@@ -71,6 +72,7 @@ void bt_clear(node *p)
     }
     bt_clear(p->left);
     bt_clear(p->right);
+    free(p);
     return;
 }
 
@@ -109,7 +111,7 @@ vector<char> bt_ancestry(node *p)
         p = p->father;
         res.push_back(p->x);
     }
-    res.reserve(res.size());
+    reverse(res.begin(), res.end());
     return res;
 }
 
@@ -145,7 +147,7 @@ int bt_leafnum(node *p)
     {
         return 0;
     }
-    else if (p->left == NULL & p->left == NULL)
+    else if (p->left == NULL && p->right == NULL)
     {
         return 1;
     }
@@ -343,7 +345,7 @@ forest bt_init_forest(char in[])
             t.push_back(i);
         }
     }
-    t.push_back(len - 1);
+    t.push_back(len);
     forest res;
     for (i = 0; i <= t.size() - 2; i++)
     {
@@ -358,7 +360,7 @@ forest bt_init_forest(char in[])
 
 void bt_clear_forest(forest s)
 {
-    for (int i = 0; i <= s.data.size() - 1; i++)
+    for (int i = (int)s.data.size() - 1; i >= 0; i--)
     {
         bt_clear(s.data[i]);
         s.data.pop_back();

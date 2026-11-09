@@ -94,16 +94,16 @@ list list_merge(list s1, list s2, bool sorted)
             a++;
             k++;
         }
-        if (s1.data[a].y > s2.data[b].y)
+        else if (s1.data[a].y > s2.data[b].y)
         {
             res.data[k].y = s2.data[b].y;
             res.data[k].x = s2.data[b].x;
             b++;
             k++;
         }
-        if (s1.data[a].y == s2.data[b].y)
+        else if (s1.data[a].y == s2.data[b].y)
         {
-            res.data[k].y = s1.data[b].y;
+            res.data[k].y = s1.data[a].y;
             res.data[k].x = s1.data[a].x + s2.data[b].x;
             a++;
             b++;
@@ -111,9 +111,6 @@ list list_merge(list s1, list s2, bool sorted)
             res.len--;
         }
     }
-    list_print(res);
-    list_print(s1);
-    list_print(s2);
     while (a <= s1.len - 1)
     {
         res.data[k].y = s1.data[a].y;
@@ -199,7 +196,7 @@ list list_merge_item(list s)
             j++;
         }
     }
-    tem.len = len;
+    tem.len = j;
     tem.space = s.space;
     return tem;
 }

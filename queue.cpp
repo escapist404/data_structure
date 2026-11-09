@@ -84,7 +84,7 @@ int q_size(queue s)
     if (s.tail >= s.head)
         return s.tail - s.head;
     else
-        return s.tail - s.head;
+        return s.tail - s.head + s.space;
 }
 void q_print(queue s)
 {
@@ -97,7 +97,7 @@ void q_print(queue s)
 
     while (i != s.tail)
     {
-        printf("%7d ", s.data[i]);
+        printf("%7d ", s.data[i].x);
         i++;
         if (i == s.space)
         {

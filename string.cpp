@@ -233,7 +233,7 @@ int str_sub_fast(string s, string sub, int start) // KMP实现
             j = next[j - 1];
         }
     }
-    i = 0;
+    i = start;
     j = 0;
     while (i < s.len && sub.len)
     {

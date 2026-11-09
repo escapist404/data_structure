@@ -109,7 +109,7 @@ node *copy(node *a)
 int main()
 {
     char input[256] = "";
-    scanf("%s", &input);
+    scanf("%s", input);
     int n = 0;
     node *s = init(input, n);
     print(s);

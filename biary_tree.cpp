@@ -61,8 +61,7 @@ int main()
     int len = pow(2, depth) - 1;
     char in[len] = "";
     scanf("%s", in);
-    node *s;
-    s = init(in, s, depth);
+    node *s = init(in, NULL, depth);
     char to[10] = "";
     scanf("%s", to);
     printf("%c", get(to, s));

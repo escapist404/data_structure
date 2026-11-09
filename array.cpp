@@ -138,7 +138,7 @@ array *a_by(array s1, array s2)
         {
             for (int k = 0; k <= s1.n[1] - 1; k++)
             {
-                s->data[i * s1.n[0] + j] += (s1.data[i * s1.n[1] + k] * s2.data[k * s2.n[1] + j]);
+                s->data[i * s2.n[1] + j] += (s1.data[i * s1.n[1] + k] * s2.data[k * s2.n[1] + j]);
             }
         }
     }
@@ -147,7 +147,7 @@ array *a_by(array s1, array s2)
 array *a_T(array s)
 {
     int n[2] = {s.n[1], s.n[0]};
-    array *res;
+    array *res = (array *)calloc(1, sizeof(array));
     a_init(res, 2, n, NULL, false);
     for (int i = 0; i <= res->n[0] - 1; i++)
         for (int j = 0; j <= res->n[1] - 1; j++)

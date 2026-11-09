@@ -126,9 +126,10 @@ matrix T(matrix s)
     {
         tem[s.data[i].j]++;
     }
+    mark[0] = 0;
     for (int i = 0; i <= s.n - 2; i++)
     {
-        mark[i + 1] = tem[i + 1] + tem[i];
+        mark[i + 1] = mark[i] + tem[i];
     }
     for (int i = 0; i <= s.size - 1; i++)
     {
